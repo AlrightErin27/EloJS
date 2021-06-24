@@ -103,3 +103,38 @@ function nth(list, n) {
   else return nth(list.rest, n - 1);
 }
 //console.log(nth(arrayToList([10, 20, 30]), 1));
+
+//------------------Deep Comparison------------------//
+//== compares objects by identity, but sometimes you'd like to compare by their actual properties
+//fxn deepEqual that takes 2 values & returns returns a boolean
+//TRUE if they are the same value
+//or are objects w/the same props & the values of the props are = when compared by a recursive call to deepEquals
+//
+//to find out if values should be compared directly use ===
+//use typeOf operator, if it produces object for both then you should do a deep comparison
+//
+
+function deepEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  if (a == null || typeof a != "object" || b == null || typeof b != "object") {
+    return false;
+  }
+
+  let keysA = Object.keys(a),
+    keysB = Object.keys(b);
+
+  for (let key of keysA) {
+    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) {
+      return false;
+    }
+  }
+  return true;
+}
+
+let obj = { here: { is: "an" }, object: 2 };
+//console.log(deepEqual(obj, obj));
+//console.log(deepEqual(obj, { here: 1, object: 2 }));
+//console.log(deepEqual(obj, { here: { is: "an" }, object: 2 }));
