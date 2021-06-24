@@ -66,10 +66,40 @@ function reverseArrInPlace(inputArr) {
 //console.log(reverseArrInPlace([1, 2, 3]));
 
 //------------------A List------------------//
-//fxn arrayToDoList that creates a structure like on pg 79
-//input [1, 2, 3]
+//fxn arrayToDoList that creates a structure like on pg 79 || CHECK
+//input [1, 2, 3] || CHECK
 //also write fxn listToArray that makes an arr from that list
 //then make a helper fxn prepend w/2 inputs: element & list
 //this fxn creates a new list that that adds elements to the front of the input list
 //and nth which takes a num & returns the element at that specific index or undefined if there is no element there
 //write a recursive fxn version of the nth
+
+function arrayToList(array) {
+  let list = null;
+  for (let i = array.length - 1; i >= 0; i--) {
+    list = { value: array[i], rest: list };
+  }
+  return list;
+}
+//console.log(arrayToList([1, 2, 3]));
+
+function listToArray(list) {
+  let array = [];
+  for (let node = list; node; node = node.rest) {
+    array.push(node.value);
+  }
+  return array;
+}
+//console.log(listToArray(arrayToList([10, 20, 30])));
+
+function prepend(value, list) {
+  return { value, rest: list };
+}
+//console.log(prepend(10, prepend(20, null)));
+
+function nth(list, n) {
+  if (!list) return undefined;
+  else if (n == 0) return list.value;
+  else return nth(list.rest, n - 1);
+}
+//console.log(nth(arrayToList([10, 20, 30]), 1));
